@@ -72,6 +72,7 @@ class XSSerOptions(optparse.OptionParser):
         group3.add_option("-c", action="store", dest="crawling", help="Number of urls to crawl on target(s): 1-99999")
         group3.add_option("--Cw", action="store", dest="crawler_width", help="Deeping level of crawler: 1-5 (default: 2)")
         group3.add_option("--Cl", action="store_true", dest="crawler_local", help="Crawl only local target(s) urls (default: FALSE)") 
+        group3.add_option("--Cb", action="append", dest="crawler_blacklist", default=[], help="Do not crawl urls that contain a regex")
         self.add_option_group(group3)
 
         group4 = optparse.OptionGroup(self, "*Configure Request(s)*",

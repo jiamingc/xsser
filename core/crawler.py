@@ -24,6 +24,7 @@ import urllib.request, urllib.parse, urllib.error
 import pycurl
 import time
 import traceback
+import re
 from . import curlcontrol
 from . import threadpool
 from queue import Queue
@@ -317,7 +318,8 @@ class Crawler(object):
         check to see if we have to continue crawling on the given url.
         """
         do_crawling = self._parse_external or href.startswith(basepath)
-        if do_crawling and not href in self._crawled:
+        blacklisted = any(re.search(regex, href) for regex in self._parent.options.crawler_blacklist)
+        if do_crawling and not href in self._crawled and not blacklisted:
             self._find_args(href)
             for reporter in self._parent._reporters:
                 reporter.add_link(path, href)
